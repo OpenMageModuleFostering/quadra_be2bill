@@ -1,0 +1,33 @@
+<?php
+/**
+ * 1997-2016 Quadra Informatique
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is available
+ * through the world-wide-web at this URL: http://www.opensource.org/licenses/OSL-3.0
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to modules@quadra-informatique.fr so we can send you a copy immediately.
+ *
+ * @author Quadra Informatique <modules@quadra-informatique.fr>
+ * @copyright 1997-2015 Quadra Informatique
+ * @license http://www.opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+?>
+
+<table class="data-table cart-table" style="border: 0 none;">
+    <tbody>
+        <?php foreach ($this->getQuote()->getAllItems() as $_item): ?>
+            <?php echo $this->getItemHtml($_item) ?>
+        <?php endforeach; ?>
+        <?php echo $this->getChildHtml('totals'); ?>
+        <tr>
+            <th class="a-right" style="border: 0 none; padding: 20px 0px 0px;">
+                <?php echo Mage::helper('checkout')->__('Shipping Address') ?>
+            </th>
+            <td  class="a-right" style="border: 0 none; padding: 20px 0px 0px;">
+                <?php echo $this->getQuote()->getShippingAddress()->format('html') ?>
+            </td>
+        </tr>
+    </tbody>
+</table>

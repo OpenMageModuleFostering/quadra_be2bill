@@ -1,0 +1,43 @@
+<?php
+/**
+ * 1997-2016 Quadra Informatique
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is available
+ * through the world-wide-web at this URL: http://www.opensource.org/licenses/OSL-3.0
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to modules@quadra-informatique.fr so we can send you a copy immediately.
+ *
+ * @author Quadra Informatique <modules@quadra-informatique.fr>
+ * @copyright 1997-2015 Quadra Informatique
+ * @license http://www.opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+?>
+<iframe id="be2bill_iframe" class="be2bill-payment-iframe" src="" width="681px" height="450px" scrolling="yes" frameborder="0" style="display: none;"></iframe>
+<script type="text/javascript">
+//<![CDATA[
+    var headers = $$('#' + checkout.accordion.container.readAttribute('id') + ' .section');
+    if ($('btn-checkout-review')) {
+        $('btn-checkout-review').observe('click', function () {
+
+            review.save();
+            var myVar = setInterval(function () {
+                if (this.response.success) {
+                    window.clearInterval(myVar);
+                    headers.each(function (header) {
+                        header.removeClassName('allow');
+                    });
+                    $('be2bill_iframe').src = '<?php echo $this->getFrameActionUrl() ?>';
+                    $('be2bill_iframe').show();
+                    checkout.loadWaiting = 'review';
+                    checkout.setLoadWaiting(false);
+                    if (checkout.accordion.currentSection == 'opc-review') {
+                        $('checkout-review-submit').hide();
+                    }
+                }
+            }, 1000);
+        });
+    }
+//]]>
+</script>

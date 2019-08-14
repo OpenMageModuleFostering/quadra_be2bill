@@ -1,0 +1,123 @@
+<?php
+/**
+ * 1997-2016 Quadra Informatique
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is available
+ * through the world-wide-web at this URL: http://www.opensource.org/licenses/OSL-3.0
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to modules@quadra-informatique.fr so we can send you a copy immediately.
+ *
+ * @author Quadra Informatique <modules@quadra-informatique.fr>
+ * @copyright 1997-2015 Quadra Informatique
+ * @license http://www.opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+?>
+<?php $_code = $this->getRequest()->getParam('method'); ?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="be2bill-oneclick">
+    <div class="page-title">
+        <h1><?php echo $this->__('Payer avec Be2bill') ?></h1>
+    </div>
+    <form action="<?php echo $this->getSubmitUrl() ?>" method="post" id="be2bill-oneclick-validate">
+        <div class="col2-set">
+            <div class="col-1">
+
+                <?php // si paiement nFois, échéancier ?>
+                <?php if (($this->ntimes())) : ?>
+               		<?php $aAdditionnalInformation = $this->getQuote()->getPayment()->getData('additional_information') ?>
+                    <h2 class="sub-title"><?php echo $this->__('Votre paiement en %s fois :', $aAdditionnalInformation['ntimes']) ?><?php echo $this->priceFormat($this->getQuote()->getBaseGrandTotal()) ?> </h2>
+                    <p><?php echo $this->__('Votre paiement en %s fois :', $aAdditionnalInformation['ntimes']) ?></p>
+                    <ul class="disc">
+                        <?php $datesOfPayment = Mage::helper('be2bill')->getSchedule($this->getFormatedAmount(), $aAdditionnalInformation['ntimes']) ?>
+                        <?php foreach ($datesOfPayment as $date => $amount): ?>
+                            <li><?php echo $this->__('%s prélevés le %s', $this->priceFormat($amount / 100), Mage::helper('core')->formatDate($date, 'short')) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif ?>
+
+                <?php // si utilisation CVV ?>
+                <?php if ($this->useCVV()): ?>
+                    <div style="padding-top: 25px;">
+                        <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+                        <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+                        <ul class="form-list">
+                            <li>
+                                <label id="<?php echo $_code ?>_label_cvv_oneclick" for="<?php echo $_code ?>_oneclick" class="required" ><em>*</em><?php echo $this->__('Pour confirmer votre paiement, veuillez saisir le CVV de votre carte') ?></label>
+                                <div class="input-box">
+                                    <input id="<?php echo $_code ?>_cc_cid" required="required" class="input-text cvv required-entry validate-cc-cvn" type="text" name="payment[cvv_oneclick]" style="width:3em !important;" autocomplete="off" />
+                                    <a href="#" class="cvv-what-is-this"><?php echo $this->__("Qu'est-ce que c'est?") ?></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+                
+                <div class="tool-tip" id="payment-tool-tip" style="display:none;">
+                    <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo $this->__('Fermé') ?>"><?php echo $this->__('fermé') ?></a></div>
+                    <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo $this->__('Numéro de carte de vérification visuelle de référence') ?>" title="<?php echo $this->__('Card Verification Number Visual Reference') ?>" /></div>
+                </div>
+            </div>
+            <div id="quote-review" class="col-2">
+                <?php echo $this->getChildHtml('be2bill.checkout.oneclick.info.review'); ?>
+            </div>
+            <div class="buttons-set">
+                <?php if ($this->useCVV()): ?>
+                    <p class="required"><?php echo $this->__('* Champs requis') ?></p>
+                <?php endif; ?>
+                <p class="info"><?php echo Mage::helper('be2bill')->__('Cliquez sur "Commander" validera automatiquement votre commande.') ?></p>
+                <button id="order-place" type="submit" title="<?php echo $this->__('Commander') ?>" class="button"><span><span><?php echo $this->__('Commander') ?></span></span></button>
+                <span class="please-wait" id="please-wait" style="display:none;">
+                    <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__("S'il vous plaît, attendez...") ?>" title="<?php echo $this->__("S'il vous plaît, attendez...") ?>" class="v-middle" /> <?php echo $this->__("S'il vous plaît, attendez...") ?>
+                </span>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        //<![CDATA[
+        var be2billOneclickValidateForm = new VarienForm('be2bill-oneclick-validate');
+
+        function toggleToolTip(event) {
+            if ($('payment-tool-tip')) {
+                $('payment-tool-tip').setStyle({
+                    top: (Event.pointerY(event) - 160) + 'px',
+                    left: (Event.pointerX(event) + 100) + 'px'
+                });
+                $('payment-tool-tip').toggle();
+            }
+            Event.stop(event);
+        }
+
+        if ($('payment-tool-tip-close')) {
+            Event.observe($('payment-tool-tip-close'), 'click', toggleToolTip);
+        }
+
+        if ($('shipping-method')) {
+            $$('input.radio').each(function (element) {
+                Event.observe(element, 'click', function () {
+                    new Ajax.Updater(
+                        'quote-review',
+                        '<?php echo Mage::getUrl('be2bill/checkout_oneclick/saveShippingMethod') ?>',
+                        {
+                            parameters: {_secure: true, estimate_method: this.value},
+                            onCreate: function () {
+                                $('order-place').hide();
+                                $('please-wait').show();
+                            },
+                            onComplete: function () {
+                                $('order-place').show();
+                                $('please-wait').hide();
+                            }
+                        }
+                    );
+                });
+            });
+        }
+
+        $$('.cvv-what-is-this').each(function (element) {
+            Event.observe(element, 'click', toggleToolTip);
+        });
+        //]]>
+    </script>
+</div>

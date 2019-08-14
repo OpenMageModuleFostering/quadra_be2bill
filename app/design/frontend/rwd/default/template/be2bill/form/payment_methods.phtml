@@ -1,0 +1,217 @@
+<?php
+/**
+ * 1997-2016 Quadra Informatique
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is available
+ * through the world-wide-web at this URL: http://www.opensource.org/licenses/OSL-3.0
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to modules@quadra-informatique.fr so we can send you a copy immediately.
+ *
+ * @author Quadra Informatique <modules@quadra-informatique.fr>
+ * @copyright 1997-2015 Quadra Informatique
+ * @license http://www.opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+?>
+<dl class="form-list be2bill-list" id="payment_<?php echo $this->getMethodCode() ?>" >
+    <?php $paymentsMethod = $this->getAvailablePayments(); ?>
+    <?php $i = 0; ?>
+    <?php
+    // boucle sur les methodes de paiement
+    foreach ($paymentsMethod as $paymentMethod) :
+
+    	// recuperation de l'objet permettant de verifier l'activation du oneClick sur la methode de paiement
+    	$aGetOneClick = $this->getOneClick($paymentMethod);
+    	
+    	// recuperation des options de paiement liee a la methode de paiement
+    	$options = $this->getAvailableFrontOptions($paymentMethod);
+
+        // boucle sur les options de paiement
+        foreach ($options as $option) : $i++;
+		
+            if($option->getdata('front_label') != null){
+				$_label = $option->getdata('front_label');
+			}
+			else{
+				if($option->getdata('b2b_xml_option') === 'ntimes'){
+					$_label = str_replace('ntimes', $this->__('%s times', unserialize($option->getData('b2b_xml_option_extra'))), $paymentMethod->getFrontendLabel($option->getdata('b2b_xml_option')));	
+				}
+				else{
+					$_label = $paymentMethod->getFrontendLabel($option->getdata('b2b_xml_option'));	
+				}
+			}
+            
+            $_code = $paymentMethod->getId() . '.' . $paymentMethod->getdata('b2b_xml_account_type_code') . '.' . $option->getdata('b2b_xml_option');
+            
+            //A ton besoin d'afficher le champ identificationDocIc
+            $hasIdenDocId = $this->getHasIdenDocId($paymentMethod->getdata('b2b_xml_account_type_code') , $option->getdata('b2b_xml_option'));
+ 
+            $_logo = $paymentMethod->getLogo();
+	?>
+            <dt id="dt_method_<?php echo $_code ?>" >
+                <input id="bb_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[be2bill_method]" title="<?php echo $_label ?>" class="radio" <?php //echo $i == 1 ? 'checked' : ''  ?> autocomplete="off" >
+                <input value="<?php echo $_label ?>" type="hidden" name="payment[<?php echo $_code ?>][label]" />
+                <label for="bb_method_<?php echo $_code ?>">
+                    <img class="be2bill-logo v-middle" alt="" src="<?php echo $_logo ?>" height="35" />
+                    <span class="be2bill-label"><?php echo $_label ?></span>
+                </label>
+            </dt>
+            
+            <dd id="dd_method_<?php echo $_code ?>" style="display:none" class="be2bill-extra-options" >
+                <ul>
+                    <?php
+                    if (in_array($option->getdata('b2b_xml_option'), array('standard', 'ntimes', 'defered', 'delivery'))):
+                    	// si oneclick actif
+                    	if($aGetOneClick['active']){
+	                        // si carte existe et toujours valide
+	                        if ($this->ccExpDateIsValid($paymentMethod->getId())){
+        			?>
+	                            <?php // radio "carte pre-enregistree" ?>
+	                            <li class="form-alt">
+	                                <?php $_card = $this->getCustomerAlias($paymentMethod->getId()) ?>
+	                                <?php if ($paymentMethod->useOneClickCVV()) : ?>
+	                                    <p class="required"><?php echo $this->__('* Champs requis') ?></p>
+	                                <?php endif; ?>
+	                                <label for="<?php echo $_code ?>_use_alias_oneclick">
+	                                    <input id="<?php echo $_code ?>_use_alias_oneclick" value="use_oneclick"  required="required" class="validate-one-required-by-name" type="radio" name="payment[<?php echo $_code ?>][oneclick]" onclick="$('<?php echo $_code ?>_card_fields').show()" />
+	                                    <?php echo $this->__('Utiliser ma carte pré-enregistrée.') ?>
+	                                </label>
+	                                <ul id="<?php echo $_code ?>_card_fields" class="form-list" style="display:none">
+	                                    <li class="info"><?php echo $this->__('Carte actuelle : %s', $_card->getCardNumber()) ?></li>
+	                                    <li class="info"><?php echo $this->__("Date d'expiration : %s", $this->getCcExpDate($_card->getDateEnd())) ?></li>
+	                                    <?php if ($paymentMethod->useOneClickCVV()) : ?>
+	                                        <li class="cvv">
+	                                            <label id="<?php echo $_code ?>_label_cvv_oneclick" for="<?php echo $_code ?>_oneclick" class="required" >
+	                                                <input id="<?php echo $_code ?>_cc_type" value="VI" type="hidden" name="payment[<?php echo $_code ?>][cc_type]" />
+	                                                <em>*</em><?php echo $this->__('Entrez votre cryptogramme') ?>
+	                                            </label>
+	                                            <div class="input-box">
+	                                                <div class="v-fix">
+	                                                    <input id="<?php echo $_code ?>_cc_cid" required="required" class="input-text cvv required-entry validate-cc-cvn" type="text" name="payment[<?php echo $_code ?>][cvv_oneclick]" autocomplete="off" />
+	                                                </div>
+	                                                <a href="#" class="cvv-what-is-this"><?php echo $this->__("Qu'est-ce que c'est?") ?></a>
+	                                            </div>
+	                                        </li>
+	                                    <?php endif; ?>
+	                                </ul>
+	                            </li>
+	                            <?php // radio "changement de CB" ?>
+	                            <li class="form-alt">
+	                                <label for="<?php echo $_code ?>_create_alias_oneclick">
+	                                    <input id="<?php echo $_code ?>_create_alias_oneclick" required="required" class="" type="radio" name="payment[<?php echo $_code ?>][oneclick]" value="create_oneclick" <?php if ($paymentMethod->useOneClickCVV()) : ?> onclick="$('<?php echo $_code ?>_card_fields').hide()" <?php endif; ?> />
+	                                    <?php echo $this->__('Remplacer vos données de Carte Bancaire.') ?>
+	                                </label>
+	                            </li>
+	                            <?php // radio "payer avec autre carte" ?>
+	                            <?php if (!$this->getQuote()->isNominal()) : ?>
+	                                <li class="form-alt">
+	                                    <label for="<?php echo $_code ?>_not_oneclick">
+	                                        <input id="<?php echo $_code ?>_not_oneclick" type="radio" name="payment[<?php echo $_code ?>][oneclick]" class="" value="not_oneclick" <?php if ($paymentMethod->useOneClickCVV()) : ?> onclick="$('<?php echo $_code ?>_card_fields').hide()" <?php endif; ?> />
+	                                        <?php echo $this->__('Payer directement avec une autre Carte Bancaire.') ?>
+	                                    </label>
+	                                </li>
+	                            <?php endif; ?>
+	                        <?php
+	                        }
+							// carte non existante ou invalide
+							else {
+	 						?>
+	                            <li class="form-alt">
+	                                <label for="<?php echo $_code ?>_create_alias_oneclick">
+	                                    <input id="<?php echo $_code ?>_create_alias_oneclick"<?php echo $this->getQuote()->isNominal() ? ' required="required" class="required-entry"' : "" ?> value="create_oneclick" type="checkbox" name="payment[<?php echo $_code ?>][oneclick]" />
+	                                    <?php echo $this->__('Enregistrez vos données de carte bancaire pour un prochain achat.') ?>
+	                                </label>
+	                            </li>
+                    	<?php
+							}
+						}
+						?>
+                        
+                    <?php endif; ?>
+                    
+                    <?php if($hasIdenDocId): ?>
+	                    <li class="form-alt">
+							<label for="<?php echo $_code ?>_identificationdocid">
+								<?php echo $this->__("Numéro d'identification") ?>
+								<input id="<?php echo $_code ?>_identificationdocid" type="text" name="payment[<?php echo $_code ?>][identificationdocid]" class="required-entry validate-length maximum-length-64 minimum-length-8" value=""  />	
+							</label>
+						</li>
+                    <?php endif; ?>                    
+                </ul>
+            </dd>
+
+            <script type="text/javascript">
+                $('bb_method_<?php echo $_code ?>').observe('click', function (event) {
+                    $$('.be2bill-extra-options').invoke('hide');
+                    $('dd_method_<?php echo $_code ?>').show();
+                    $('p_method_be2bill').checked = true;
+
+                    //rendre le potentiel option (oneclik etc) obligatoire
+                    if ($('<?php echo $_code ?>_use_alias_oneclick'))
+                        $('<?php echo $_code ?>_use_alias_oneclick').addClassName('validate-one-required-by-name');
+
+                    payment.switchMethod('be2bill');
+                });
+            </script>
+        <?php endforeach; ?>
+        
+        <?php
+        unset($aGetOneClick);
+        ?>
+        
+    <?php endforeach; ?>
+</dl>
+<script type="text/javascript">
+    $$('input[name="payment[method]"]').each(function (elemt) {
+        elemt.observe('change', function (event) {
+            if (elemt.value != 'be2bill') {
+                $$('.be2bill-extra-options').invoke('hide');
+                $$('#payment_be2bill input[type="radio"]').each(function (elmt) {
+                    elmt.checked = false;
+                    elmt.removeClassName('validate-one-required-by-name');
+                });
+            }
+        });
+    });
+    //cacher : choisir parmi..
+    $('dt_method_be2bill').setStyle({visibility: 'hidden'});
+    if ($('p_method_be2bill').checked == true && $('dt_method_be2bill')) { //si la seul méthode de paiement affiché est : be2bill
+        //alors on coche la première method be2bill générique
+        $$('.be2bill-list input[type="radio"]')[0].checked = true;
+    }
+
+    Payment.prototype.init = function () {
+        this.beforeInit();
+        var elements = Form.getElements(this.form);
+        if ($(this.form)) {
+            $(this.form).observe('submit', function (event) {
+                this.save();
+                Event.stop(event);
+            }.bind(this));
+        }
+        var method = null;
+        for (var i = 0; i < elements.length; i++) {
+            if (elements[i].name == 'payment[method]') {
+                if (elements[i].checked) {
+                    method = elements[i].value;
+                }
+            } else {
+                elements[i].disabled = true;
+            }
+            elements[i].setAttribute('autocomplete', 'off');
+        }
+        if (method)
+            this.switchMethod(method);
+        this.afterInit();
+
+        //add be2bill
+        var descendants = $('payment_be2bill').descendants();
+        for (var k in descendants) {
+            descendants[k].disabled = false;
+        }
+        $('payment_be2bill').disabled = false;
+
+    };
+</script>
+

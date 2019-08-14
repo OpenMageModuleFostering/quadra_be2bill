@@ -1,0 +1,96 @@
+/**
+ * 1997-2016 Quadra Informatique
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is available
+ * through the world-wide-web at this URL: http://www.opensource.org/licenses/OSL-3.0
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to modules@quadra-informatique.fr so we can send you a copy immediately.
+ *
+ * @author Quadra Informatique <modules@quadra-informatique.fr>
+ * @copyright 1997-2015 Quadra Informatique
+ * @license http://www.opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+
+/* All products */
+.add-to-cart .be2bill-simple-product-oneclick:after,
+.add-to-cart .be2bill-simple-product-oneclick .actions:after,
+.add-to-cart .be2bill-grouped-product-oneclick:after,
+.add-to-cart .be2bill-grouped-product-oneclick .actions:after,
+.add-to-cart .be2bill-configurable-product-oneclick:after,
+.add-to-cart .be2bill-configurable-product-oneclick .actions:after,
+.add-to-cart .be2bill-virtual-product-oneclick:after,
+.add-to-cart .be2bill-virtual-product-oneclick .actions:after,
+.add-to-cart .be2bill-bundle-product-oneclick:after,
+.add-to-cart .be2bill-bundle-product-oneclick .actions:after,
+.add-to-cart .be2bill-downloadable-product-oneclick:after,
+.add-to-cart .be2bill-downloadable-product-oneclick .actions:after { display:block; content:"."; clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }
+
+.add-to-cart .be2bill-simple-product-oneclick button.button,
+.add-to-cart .be2bill-grouped-product-oneclick button.button,
+.add-to-cart .be2bill-configurable-product-oneclick button.button,
+.add-to-cart .be2bill-virtual-product-oneclick button.button,
+.add-to-cart .be2bill-bundle-product-oneclick button.button,
+.add-to-cart .be2bill-downloadable-product-oneclick button.button { padding-top: 5px; }
+
+.add-to-cart .be2bill-simple-product-oneclick button.button.last,
+.add-to-cart .be2bill-grouped-product-oneclick button.button.last,
+.add-to-cart .be2bill-configurable-product-oneclick button.button.last,
+.add-to-cart .be2bill-virtual-product-oneclick button.button.last,
+.add-to-cart .be2bill-bundle-product-oneclick button.button.last,
+.add-to-cart .be2bill-downloadable-product-oneclick button.button.last { padding-left: 5px; }
+
+.add-to-cart .be2bill-simple-product-oneclick .be2bill-product-oneclick-content,
+.add-to-cart .be2bill-grouped-product-oneclick .be2bill-product-oneclick-content,
+.add-to-cart .be2bill-configurable-product-oneclick .be2bill-product-oneclick-content,
+.add-to-cart .be2bill-virtual-product-oneclick .be2bill-product-oneclick-content,
+.add-to-cart .be2bill-bundle-product-oneclick .be2bill-product-oneclick-content,
+.add-to-cart .be2bill-downloadable-product-oneclick .be2bill-product-oneclick-content { margin: 5px; }
+
+/* Simple, grouped, virtual, downloadable products */
+.add-to-cart .be2bill-simple-product-oneclick,
+.add-to-cart .be2bill-grouped-product-oneclick,
+.add-to-cart .be2bill-virtual-product-oneclick,
+.add-to-cart .be2bill-downloadable-product-oneclick {
+    background: url("../../images/bkg_product_collateral.gif") repeat-x scroll 0 0 #FAF7EE;
+    border: 1px solid #C4C6C8;
+    clear: left;
+    margin: 10px 0;
+    width: 330px;
+}
+
+.add-to-cart .be2bill-simple-product-oneclick .actions,
+.add-to-cart .be2bill-grouped-product-oneclick .actions,
+.add-to-cart .be2bill-virtual-product-oneclick .actions,
+.add-to-cart .be2bill-configurable-product-oneclick .actions,
+.add-to-cart .be2bill-downloadable-product-oneclick .actions {
+    margin-top : 5px
+}
+
+.add-to-cart .be2bill-simple-product-oneclick .or,
+.add-to-cart .be2bill-grouped-product-oneclick .or,
+.add-to-cart .be2bill-virtual-product-oneclick .or,
+.add-to-cart .be2bill-downloadable-product-oneclick .or  { float: none; margin: 0; }
+
+.add-to-cart .be2bill-simple-product-oneclick .field .input-box select,
+.add-to-cart .be2bill-grouped-product-oneclick .field .input-box select,
+.add-to-cart .be2bill-virtual-product-oneclick .field .input-box select,
+.add-to-cart .be2bill-downloadable-product-oneclick .field .input-box select { width: 320px; }
+
+/* Configurable, bundle products */
+.add-to-cart .be2bill-configurable-product-oneclick,
+.add-to-cart .be2bill-bundle-product-oneclick { margin: 10px 0; }
+.add-to-cart .be2bill-configurable-product-oneclick .or,
+.add-to-cart .be2bill-bundle-product-oneclick .or { color: #666666; float: left; font-weight: bold; }
+
+/* Configurable products */
+.add-to-cart .be2bill-configurable-product-oneclick { clear: left; background-color: #F6F6F6; border: 1px solid #E4E4E4; }
+.add-to-cart .be2bill-configurable-product-oneclick .field .input-box select { width: 276px; }
+
+/* Bundle products */
+.add-to-cart .be2bill-bundle-product-oneclick { float: none; margin-top: 30px; background-color: #F6F6F6; border: 1px solid #E4E4E4; }
+.add-to-cart .be2bill-bundle-product-oneclick .field .input-box select { width: 250px; }
+
+
+.add-to-cart #button_ntimes { margin-left: 0px; }

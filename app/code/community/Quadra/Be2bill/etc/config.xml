@@ -1,0 +1,332 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 1997-2016 Quadra Informatique
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is available
+ * through the world-wide-web at this URL: http://www.opensource.org/licenses/OSL-3.0
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to modules@quadra-informatique.fr so we can send you a copy immediately.
+ *
+ * @author Quadra Informatique <modules@quadra-informatique.fr>
+ * @copyright 1997-2015 Quadra Informatique
+ * @license http://www.opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Quadra_Be2bill>
+            <version>5.0.7</version>
+        </Quadra_Be2bill>
+    </modules>
+    <global>
+        <be2bill>
+            <remote_addr_headers>
+                <http_x_forwarded_for>HTTP_X_FORWARDED_FOR</http_x_forwarded_for>
+                <remote_addr>REMOTE_ADDR</remote_addr>
+            </remote_addr_headers>
+        </be2bill>
+        <blocks>
+            <be2bill>
+                <class>Quadra_Be2bill_Block</class>
+            </be2bill>
+			<adminhtml>
+				<rewrite>
+					<sales_order_view_tab_transactions>Quadra_Be2bill_Block_Adminhtml_Sales_Order_View_Tab_Transactions</sales_order_view_tab_transactions>
+					<sales_transactions_grid>Quadra_Be2bill_Block_Adminhtml_Sales_Transactions_Grid</sales_transactions_grid>
+				</rewrite>
+			</adminhtml>
+        </blocks>
+        <helpers>
+            <be2bill>
+                <class>Quadra_Be2bill_Helper</class>
+            </be2bill>
+        </helpers>
+        <models>
+            <be2bill>
+                <class>Quadra_Be2bill_Model</class>
+                <resourceModel>be2bill_resource</resourceModel>
+            </be2bill>
+            <customer>
+                <rewrite>
+                    <customer>Quadra_Be2bill_Model_Customer</customer>
+                </rewrite>
+            </customer>
+            <be2bill_resource>
+                <class>Quadra_Be2bill_Model_Resource</class>
+                <deprecatedNode>be2bill_mysql4</deprecatedNode>
+                <entities>
+                    <xmlmodeslang>
+                        <table>b2b_xml_modes_lang</table>
+                    </xmlmodeslang>
+
+                    <xmloperationlang>
+                        <table>b2b_xml_operation_lang</table>
+                    </xmloperationlang>
+
+                    <xmloptions>
+                        <table>b2b_xml_options</table>
+                    </xmloptions>
+
+                    <xmloptionslang>
+                        <table>b2b_xml_options_lang</table>
+                    </xmloptionslang>
+
+                    <xmlaccounttypes>
+                        <table>b2b_xml_account_types</table>
+                    </xmlaccounttypes>
+
+                    <xmlaccounttypelang>
+                        <table>b2b_xml_account_type_lang</table>
+                    </xmlaccounttypelang>
+
+                    <xmlaccounttypecurrency>
+                        <table>b2b_xml_account_type_currency</table>
+                    </xmlaccounttypecurrency>
+
+                    <xmlaccounttypeparameterset>
+                        <table>b2b_xml_account_type_parameter_set</table>
+                    </xmlaccounttypeparameterset>
+
+                    <xmlaccounttypeparametersetcountries>
+                        <table>b2b_xml_account_type_parameter_set_countries</table>
+                    </xmlaccounttypeparametersetcountries>
+
+                    <xmlaccounttypeparametersetmode>
+                        <table>b2b_xml_account_type_parameter_set_mode</table>
+                    </xmlaccounttypeparametersetmode>
+
+                    <xmlaccounttypeparametersetoperation>
+                        <table>b2b_xml_account_type_parameter_set_operation</table>
+                    </xmlaccounttypeparametersetoperation>
+
+                    <xmlaccounttypeparametersetparameters>
+                        <table>b2b_xml_account_type_parameter_set_parameters</table>
+                    </xmlaccounttypeparametersetparameters>
+
+                    <xmlaccounttypeparametersetoptions>
+                        <table>b2b_xml_account_type_parameter_set_options</table>
+                    </xmlaccounttypeparametersetoptions>
+
+                    <merchandconfigurationaccount>
+                        <table>b2b_merchand_configuration_account</table>
+                    </merchandconfigurationaccount>
+
+                    <merchandconfigurationaccountoptions>
+                        <table>b2b_merchand_configuration_account_options</table>
+                    </merchandconfigurationaccountoptions>
+
+                    <merchandconfigurationaccountcountries>
+                        <table>b2b_merchand_configuration_account_countries</table>
+                    </merchandconfigurationaccountcountries>
+
+                    <alias>
+                        <table>b2b_alias</table>
+                    </alias>
+                </entities>
+            </be2bill_resource>
+        </models>
+        <resources>
+            <be2bill_setup>
+                <setup>
+                    <module>Quadra_Be2bill</module>
+                </setup>
+            </be2bill_setup>
+            <!-- connection pour ecrire -->
+            <be2bill_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </be2bill_write>
+            <!-- connection pour lire-->
+            <be2bill_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </be2bill_read>
+        </resources>
+        <sales>
+            <order>
+                <statuses>
+                    <!-- retained for backwards compatibility, not used after version 1.4.2 -->
+                    <pending_be2bill translate="label">
+                        <label>Pending Capture Be2bill</label>
+                    </pending_be2bill>
+                </statuses>
+            </order>
+        </sales>
+        <events>
+<!--            <sales_order_save_after>
+                <observers>
+                    <auto_invoice_order>
+                        <class>be2bill/observer</class>
+                        <method>capture</method>
+                    </auto_invoice_order>
+                </observers>
+            </sales_order_save_after>-->
+            <mirakl_customer_debit>
+                <observers>
+                    <captureMkpProducts>
+                        <class>be2bill/observer</class>
+                        <method>captureMkpProducts</method>
+                    </captureMkpProducts>
+                </observers>
+            </mirakl_customer_debit>
+            <mirakl_customer_refund>
+                <observers>
+                    <captureMkpProducts>
+                        <class>be2bill/observer</class>
+                        <method>refundMkpProducts</method>
+                    </captureMkpProducts>
+                </observers>
+            </mirakl_customer_refund>
+        </events>
+    </global>
+    <frontend>
+        <secure_url>
+            <be2bill>/be2bill/payments</be2bill>
+            <be2bill_template>/be2bill/template</be2bill_template>
+            <be2bill_checkout_oneclick>/be2bill/checkout_oneclick</be2bill_checkout_oneclick>
+        </secure_url>
+        <routers>
+            <be2bill>
+                <use>standard</use>
+                <args>
+                    <module>Quadra_Be2bill</module>
+                    <frontName>be2bill</frontName>
+                </args>
+            </be2bill>
+        </routers>
+        <translate>
+            <modules>
+                <Quadra_Be2bill>
+                    <files>
+                        <default>Quadra_Be2bill.csv</default>
+                    </files>
+                </Quadra_Be2bill>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <be2bill>
+                    <file>be2bill.xml</file>
+                </be2bill>
+            </updates>
+        </layout>
+        <events>
+            <payment_method_is_active>
+                <observers>
+                    <be2bill_alert_on_cart>
+                        <type>singleton</type>
+                        <class>be2bill/observer</class>
+                        <method>checkPaymentMethod</method>
+                    </be2bill_alert_on_cart>
+                </observers>
+            </payment_method_is_active>
+            <checkout_submit_all_after>
+                <observers>
+                    <be2bill_recurring_redirect_url>
+                        <type>singleton</type>
+                        <class>be2bill/observer</class>
+                        <method>setRedirectUrl</method>
+                    </be2bill_recurring_redirect_url>
+                </observers>
+            </checkout_submit_all_after>
+        </events>
+    </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Quadra_Be2bill before="Mage_Adminhtml">Quadra_Be2bill_Adminhtml</Quadra_Be2bill>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Quadra_Be2bill>
+                    <files>
+                        <default>Quadra_Be2bill.csv</default>
+                    </files>
+                </Quadra_Be2bill>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <be2bill>
+                    <file>be2bill.xml</file>
+                </be2bill>
+            </updates>
+        </layout>
+    </adminhtml>
+    <default>
+        <be2bill>
+            <be2bill_api>
+                <url_xml>https://template.be2bill.com/cms/xml/v1/configuration.xml</url_xml>
+                <uri_rest>https://secure-magenta1.be2bill.com/front/service/rest/process.php</uri_rest>
+                <uri_rest_high_dispo>https://secure-magenta2.be2bill.comfront/service/rest/process.php</uri_rest_high_dispo>
+                <uri_rest_test>https://secure-test.be2bill.com/front/service/rest/process.php</uri_rest_test>
+                <uri_form></uri_form>
+                <uri_form_test>https://secure-test.be2bill.com/front/form/process</uri_form_test>
+                <direct_submit_test>https://secure-test.be2bill.com/front/direct-submit/process</direct_submit_test>
+                <debug>0</debug>
+                <test>0</test>
+                <klarna_doc>TAXSTATEMENT</klarna_doc>
+            </be2bill_api>
+        </be2bill>
+        <payment>
+            <be2bill>
+                <active>1</active>
+                <model>be2bill/method_paymentMethods</model>
+                <title>Be2Bill</title>
+                <allowspecific>0</allowspecific>
+                <auth_validity_day>10</auth_validity_day>
+                <hide_card_fullname>1</hide_card_fullname>
+                <allow_range_ips>80.70.213.64/27,80.70.210.64/27,80.70.210.32/27,78.24.33.228</allow_range_ips>
+                <statues_order_to_clean>pending_be2bill</statues_order_to_clean><!-- if you had some one, separe them by comma -->
+            </be2bill>
+        </payment>
+    </default>
+    <crontab>
+        <jobs>
+            <submit_recurring_profiles>
+                <schedule>
+                    <cron_expr>0 5,8,12,16,19,21 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>be2bill/observer::submitRecurringProfiles</model>
+                </run>
+            </submit_recurring_profiles>
+            <clean_orders_be2bill>
+                <schedule>
+                    <cron_expr>0 4 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>be2bill/observer::cleanOrdersInPendingBe2bill</model>
+                </run>
+            </clean_orders_be2bill>
+            <clean_orders_be2bill_in_pending>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>be2bill/observer::cancelOrdersInPending</model>
+                </run>
+            </clean_orders_be2bill_in_pending>
+            <submit_defered_orders>
+                <schedule>
+                    <cron_expr>0 3 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>be2bill/observer::submitDeferedOrders</model>
+                </run>
+            </submit_defered_orders>
+        </jobs>
+    </crontab>
+</config>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+
+    <!--
+    <be2bill_template_nossl>
+        <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="be2bill.nossl" template="be2bill/model/no_ssl.phtml" />
+        </reference>
+    </be2bill_template_nossl>
+    -->
+
+    <!--
+    <be2bill_template_ssl>
+        <remove name="store_language" />
+        <remove name="store_switcher" />
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="be2bill.ssl" template="be2bill/model/ssl.phtml" />
+        </reference>
+    </be2bill_template_ssl>
+    -->
+
+    <!--
+    <be2bill_template_iframe>
+        <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="be2bill.iframe" template="be2bill/model/iframe.phtml" />
+        </reference>
+    </be2bill_template_iframe>
+    -->
+
+    <be2bill_template_success>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/empty.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="be2bill.iframe.success" template="be2bill/model/success.phtml" />
+        </reference>
+    </be2bill_template_success>
+
+    <be2bill_template_failure>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/empty.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="be2bill.iframe.failure" template="be2bill/model/failure.phtml" />
+        </reference>
+    </be2bill_template_failure>
+
+    <be2bill_checkout_oneclick_info translate="label">
+        <label>Pay with Be2bill</label>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="be2bill/checkout_oneclick_info" name="be2bill.checkout.oneclick.info" template="be2bill/checkout/oneclick/info.phtml">
+                <block type="be2bill/checkout_oneclick_info" name="be2bill.checkout.oneclick.info.review" template="be2bill/checkout/oneclick/info/review.phtml">
+                    <action method="addItemRender">
+                        <type>simple</type>
+                        <block>checkout/cart_item_renderer</block>
+                        <template>be2bill/checkout/cart/item/default.phtml</template>
+                    </action>
+                    <action method="addItemRender">
+                        <type>grouped</type>
+                        <block>checkout/cart_item_renderer_grouped</block>
+                        <template>be2bill/checkout/cart/item/default.phtml</template>
+                    </action>
+                    <action method="addItemRender">
+                        <type>configurable</type>
+                        <block>checkout/cart_item_renderer_configurable</block>
+                        <template>be2bill/checkout/cart/item/default.phtml</template>
+                    </action>
+                    <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="be2bill/checkout/cart/totals.phtml"/>
+                </block>
+            </block>
+        </reference>
+    </be2bill_checkout_oneclick_info>
+
+    <catalog_product_view>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>css/be2bill/product.css</name>
+            </action>
+        </reference>
+        <reference name="product.info.addtocart">
+            <block type="be2bill/checkout_oneclick_product" name="be2bill.checkout.oneclick.product" before="catalog.product.related" template="be2bill/checkout/oneclick/product.phtml" />
+        </reference>
+    </catalog_product_view>
+
+
+    <checkout_onepage_index>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>css/be2bill/checkout-onepage-payment.css</name>
+            </action>
+        </reference>
+    </checkout_onepage_index>
+
+    <checkout_onepage_review>
+        <reference name="checkout.onepage.review.info.items.after">
+            <block type="be2bill/checkout_review_info" name="be2bill.checkout.review.info" template="be2bill/checkout/review/info.phtml" />
+            <block type="be2bill/method_iframe" name="be2bill.iframe" />
+        </reference>
+        <reference name="checkout.onepage.review.button">
+            <action method="setTemplate">
+                <template helper="be2bill/data/getReviewButtonTemplate">
+                    <name>be2bill/checkout/review/button.phtml</name>
+                    <block>checkout.onepage.review.button</block>
+                </template>
+            </action>
+        </reference>
+    </checkout_onepage_review>
+
+    <!--
+    <checkout_onepage_success>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/be2bill/checkout-success-crossell.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="be2bill/checkout_success_crosssell" name="be2bill.checkout.success.crosssell" as="crosssell" template="be2bill/checkout/success/crosssell.phtml"/>
+        </reference>
+    </checkout_onepage_success>
+    -->
+
+</layout>

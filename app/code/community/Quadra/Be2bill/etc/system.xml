@@ -1,0 +1,410 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 1997-2016 Quadra Informatique
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is available
+ * through the world-wide-web at this URL: http://www.opensource.org/licenses/OSL-3.0
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to modules@quadra-informatique.fr so we can send you a copy immediately.
+ *
+ * @author Quadra Informatique <modules@quadra-informatique.fr>
+ * @copyright 1997-2015 Quadra Informatique
+ * @license http://www.opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <tabs>
+        <be2bill translate="label" module="be2bill">
+            <label>Be2bill</label>
+            <sort_order>100000</sort_order>
+        </be2bill>
+    </tabs>
+    <sections>
+        <be2bill translate="label" module="be2bill">
+            <label>API Be2bill</label>
+            <tab>be2bill</tab>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <be2bill_notice translate="label" module="be2bill">
+                    <frontend_model>be2bill/adminhtml_system_config_fieldset_hint</frontend_model>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </be2bill_notice>
+                <be2bill_api translate="label">
+                    <label>Configuration de l'API Be2Bill</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <version translate="label">
+                            <label>Version de l'XML</label>
+                            <comment><![CDATA[Version de l'XML d'import des données]]></comment>
+                            <frontend_model>Quadra_Be2bill_Block_Adminhtml_Field_Version_Renderer</frontend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </version>
+                        <url_xml translate="label comment">
+                            <label>URL -> XML (comptes dynamiques)</label>
+                            <comment><![CDATA[Url vers l'xml d'import des données]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </url_xml>
+                        <uri_rest translate="label comment">
+                            <label>URL PRINCIPALE du service 'serveur à serveur'</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </uri_rest>
+                        <uri_rest_high_dispo translate="label comment">
+                            <label>URL SECONDAIRE du service 'serveur à serveur'</label>
+                            <comment><![CDATA[Url de haute disponibilité]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </uri_rest_high_dispo>
+                        <uri_rest_test translate="label comment">
+                            <label>URL de TEST du service 'serveur à serveur'</label>
+                            <comment><![CDATA[/!\ Test /!\]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </uri_rest_test>
+                        <uri_form translate="label comment">
+                            <label>URL PRINCIPALE du formulaire de paiement</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </uri_form>
+                         <uri_form_high_dispo translate="label comment">
+                            <label>URL SECONDAIRE du formulaire de paiement</label>
+                            <comment><![CDATA[Url de haute disponibilité]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>72</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </uri_form_high_dispo>
+                        <uri_form_test translate="label comment">
+                            <label>Url de test du formulaire de paiement </label>
+                            <comment><![CDATA[/!\ Test /!\]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </uri_form_test>
+                        <direct_submit translate="label comment">
+                            <label>URL PRINCIPALE du paiement direct</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </direct_submit>
+                        <direct_submit_high_dispo translate="label comment">
+                            <label>URL SECONDAIRE du paiement direct</label>
+                            <comment><![CDATA[Url de haute disponibilité]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>91</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </direct_submit_high_dispo>
+                        <direct_submit_test translate="label comment">
+                            <label>Url de TEST du paiement direct</label>
+                            <comment><![CDATA[/!\ Test /!\]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </direct_submit_test>
+                        <debug translate="label comment">
+                            <label>Mode Debug</label>
+                            <comment><![CDATA[Activer le mode debug]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </debug>
+                        <test translate="label comment">
+                            <label>Mode Test</label>
+                            <comment><![CDATA[Activer le mode test]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </test>
+                        <klarna_doc translate="label comment">
+                            <label>Document Klarna</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </klarna_doc>
+                    </fields>
+                </be2bill_api>
+                <be2bill_errors>
+                    <label>Be2bill Messages d erreur</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <error_4001 translate="label">
+                            <label>Erreur 4001</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[The bank refused the transaction.]]></comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4001>
+                        <error_4002 translate="label">
+                            <label>Erreur 4002</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Insufficient funds.]]></comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4002>
+                        <error_4003 translate="label">
+                            <label>Erreur 4003</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Card refused by the bank networks.]]></comment>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4003>
+                        <error_4004 translate="label">
+                            <label>Erreur 4004</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[The transaction has been abandoned.]]></comment>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4004>
+                        <error_4005 translate="label">
+                            <label>Erreur 4005</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Fraud suspicion.]]></comment>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4005>
+                        <error_4006 translate="label">
+                            <label>Erreur 4006</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[The card has been declared as lost.]]></comment>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4006>
+                        <error_4007 translate="label">
+                            <label>Erreur 4007</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[The card has been declared as stolen.]]></comment>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4007>
+                        <error_4008 translate="label">
+                            <label>Erreur 4008</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[The 3D secure authentication failed.]]></comment>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4008>
+                        <error_4009 translate="label">
+                            <label>Erreur 4009</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[The 3D secure authentication request has expired.]]></comment>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4009>
+                        <error_4010 translate="label">
+                            <label>Erreur 4010</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Invalid transaction.]]></comment>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4010>
+                        <error_4011 translate="label">
+                            <label>Erreur 4011</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Duplicate request.]]></comment>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4011>
+                        <error_4012 translate="label">
+                            <label>Erreur 4012</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Invalid card data.]]></comment>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4012>
+                        <error_4013 translate="label">
+                            <label>Erreur 4013</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Transaction not allowed by bank networks to the card holder.]]></comment>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_4013>
+                        <error_5001 translate="label">
+                            <label>Erreur 5001</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Exchange protocol failure.]]></comment>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_5001>
+                        <error_5002 translate="label">
+                            <label>Erreur 5002</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Bank networks failure.]]></comment>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_5002>
+                        <error_5003 translate="label">
+                            <label>Erreur 5003</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[System under maintenance, please try again later.]]></comment>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_5003>
+                        <error_5004 translate="label">
+                            <label>Erreur 5004</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Timeout. The result will be sent to notification url.]]></comment>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_5004>
+                        <error_5005 translate="label">
+                            <label>Erreur 5005</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[3D secure authentification error.]]></comment>
+                            <sort_order>180</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_5005>
+                        <error_6001 translate="label">
+                            <label>Erreur 6001</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Transaction declined by merchant.]]></comment>
+                            <sort_order>190</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_6001>
+                        <error_6002 translate="label">
+                            <label>Erreur 6002</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Transaction declined.]]></comment>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_6002>
+                        <error_6003 translate="label">
+                            <label>Erreur 6003</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Cardholder has already disputed a transaction.]]></comment>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_6003>
+                        <error_6004 translate="label">
+                            <label>Erreur 6004</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Transaction declined by merchant's rules.]]></comment>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_6004>
+                    </fields>
+                </be2bill_errors>
+            </groups>
+        </be2bill>
+        <payment>
+            <groups>
+                <be2bill translate="label" module="be2bill">
+                    <label>Be2bill</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Activer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                    </fields>
+                </be2bill>
+            </groups>
+        </payment>
+    </sections>
+</config>

@@ -1,17 +1,5 @@
 {
-    "name": "OpenMageModuleFostering/Quadra_Be2bill",
-    "type": "magento-module",
-    "license": "Open-Software-License-(OSL)",
-    "homepage": "",
-    "description": "Be2bill is the online solution for payment by cards. Dedicated to the e-merchants, it helps them improve their churn rate and fight fraud.
-Be2bill, your banker thinks Web!",
-    "authors": [
-    {
-        "name": "Quadra Informatique",
-        "email": "modules@quadra-informatique.fr"
-    }
-],
-    "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+    "keywords": [
+        "openmage-module"
+    ]
 }
